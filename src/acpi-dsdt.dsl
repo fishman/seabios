@@ -218,6 +218,7 @@ DefinitionBlock (
 
         Device(HPET) {
             Name(_HID,  EISAID("PNP0103"))
+            Name(_CID, 0x010CD041)
             Name(_UID, 0)
             Method (_STA, 0, NotSerialized) {
                     Return(0x0F)
@@ -232,6 +233,23 @@ DefinitionBlock (
                     0x00000000,
                     0x00000400 /* 1K memory: FED00000 - FED003FF */
                 )
+            })
+        }
+        Device (SMC)
+        {
+            Name (_HID, EisaId ("APP0001"))
+            Name (_CID, "smc-napa")
+            Name (_STA, 0x0B)
+            Name (_CRS, ResourceTemplate ()
+            {
+                IO (Decode16,
+                    0x0300,             // Range Minimum
+                    0x0300,             // Range Maximum
+                    0x01,               // Alignment
+                    0x20,               // Length
+                    )
+                IRQNoFlags ()
+                    {6}
             })
         }
     }
